@@ -1,0 +1,76 @@
+
+import math
+
+
+def pozitif_sayi_al(mesaj):
+    while True:
+        try:
+            sayi = float(input(mesaj).replace(",", "."))
+
+            if sayi > 0:
+                return sayi
+            else:
+                print("Lütfen sıfırdan büyük bir sayı girin.")
+
+        except ValueError:
+            print("Geçerli bir sayı girmeniz gerekiyor.")
+
+
+def main():
+
+    print("\n--- BASİT SARKAÇ DENEYİ ---")
+    print("Yerçekimi ivmesi hesaplama programı\n")
+
+    uzunluk = pozitif_sayi_al(
+        "Sarkacın uzunluğunu metre cinsinden girin: "
+    )
+
+    olcum_sayisi = int(pozitif_sayi_al(
+        "Kaç ölçüm yapacaksınız?: "
+    ))
+
+    sonuclar = []
+
+    for i in range(1, olcum_sayisi + 1):
+
+        print(f"\n{i}. Ölçüm")
+
+        toplam_sure = pozitif_sayi_al(
+            "10 salınımın toplam süresini girin (saniye): "
+        )
+
+        periyot = toplam_sure / 10
+
+        yercekimi = (
+            4 * math.pi ** 2 * uzunluk
+        ) / (periyot ** 2)
+
+        sonuclar.append(yercekimi)
+
+        print(f"Salınım periyodu: {periyot:.3f} saniye")
+        print(f"Hesaplanan yerçekimi: {yercekimi:.3f} m/s²")
+
+    ortalama = sum(sonuclar) / len(sonuclar)
+
+    print("\n--- DENEY SONUÇLARI ---")
+
+    print(f"Ortalama yerçekimi ivmesi: {ortalama:.3f} m/s²")
+
+    gercek_deger = 9.81
+
+    hata = abs(ortalama - gercek_deger) / gercek_deger * 100
+
+    print(f"Yüzde hata: %{hata:.2f}")
+
+    if hata < 5:
+        print("Deney sonucu oldukça başarılı.")
+    elif hata < 15:
+        print("Deney sonucu kabul edilebilir düzeyde.")
+    else:
+        print("Ölçümlerde hata olabilir.")
+
+    print("\nDeney tamamlandı.")
+
+
+if __name__ == "__main__":
+    main()
